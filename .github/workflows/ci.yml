@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: install rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+          components: clippy, rustfmt
+
+      - name: install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: cache rust build
+        uses: Swatinem/rust-cache@v2
+
+      - name: rustfmt
+        run: cargo fmt --check
+
+      - name: clippy
+        run: cargo clippy --workspace -- -D warnings
+
+      - name: workspace tests
+        run: cargo test --workspace
+
+      - name: conformance tests
+        run: cargo test --package concerto-conformance -- --nocapture
+
+      - name: build cli
+        run: cargo build --release --package concerto-cli
+
+      - name: build ffi
+        run: cargo build --release --package concerto-ffi
+
+      - name: ffi smoke demo
+        run: python3 concerto-ffi/demo/demo.py
+
+      - name: install wasm-pack
+        run: cargo install wasm-pack --locked
+
+      - name: build wasm web
+        working-directory: concerto-wasm
+        run: wasm-pack build --target web
+
+      - name: build wasm node
+        working-directory: concerto-wasm
+        run: wasm-pack build --target nodejs --out-dir pkg-node
+
+      - name: node wasm smoke
+        run: node concerto-wasm/scripts/node_smoke.mjs

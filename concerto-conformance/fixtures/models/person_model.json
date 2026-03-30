@@ -1,0 +1,31 @@
+{
+  "$class": "concerto.metamodel@1.0.0.Model",
+  "namespace": "org.example@1.0.0",
+  "declarations": [
+    {
+      "$class": "concerto.metamodel@1.0.0.ConceptDeclaration",
+      "name": "Person",
+      "isAbstract": false,
+      "properties": [
+        {
+          "$class": "concerto.metamodel@1.0.0.StringProperty",
+          "name": "email",
+          "isArray": false,
+          "isOptional": false
+        },
+        {
+          "$class": "concerto.metamodel@1.0.0.StringProperty",
+          "name": "firstName",
+          "isArray": false,
+          "isOptional": false
+        },
+        {
+          "$class": "concerto.metamodel@1.0.0.IntegerProperty",
+          "name": "age",
+          "isArray": false,
+          "isOptional": false
+        }
+      ]
+    }
+  ]
+}

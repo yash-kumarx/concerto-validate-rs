@@ -1,0 +1,15 @@
+{
+  "name": "datetime field rejects non-rfc3339 string",
+  "model_files": [
+    "models/person_model.json"
+  ],
+  "instance_file": "instances/person_bad_datetime.json",
+  "type_name": "org.example@1.0.0.Person",
+  "expect": {
+    "valid": false,
+    "error_count": 1,
+    "error_paths": [
+      "$.dateOfBirth"
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$class": "concerto.metamodel@1.0.0.Model",
+  "namespace": "org.map@1.0.0",
+  "declarations": [
+    {
+      "$class": "concerto.metamodel@1.0.0.MapDeclaration",
+      "name": "Checklist",
+      "key": {"$class": "concerto.metamodel@1.0.0.DateTimeMapKeyType"},
+      "value": {"$class": "concerto.metamodel@1.0.0.BooleanMapValueType"}
+    },
+    {
+      "$class": "concerto.metamodel@1.0.0.ConceptDeclaration",
+      "name": "Inspection",
+      "isAbstract": false,
+      "properties": [
+        {
+          "$class": "concerto.metamodel@1.0.0.ObjectProperty",
+          "name": "checks",
+          "isArray": false,
+          "isOptional": false,
+          "type": {"$class": "concerto.metamodel@1.0.0.TypeIdentifier", "name": "Checklist"}
+        }
+      ]
+    }
+  ]
+}

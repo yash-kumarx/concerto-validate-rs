@@ -1,0 +1,14 @@
+{
+  "$class": "concerto.metamodel@1.0.0.Model",
+  "namespace": "org.abstracts@1.0.0",
+  "declarations": [
+    {
+      "$class": "concerto.metamodel@1.0.0.ConceptDeclaration",
+      "name": "BaseRecord",
+      "isAbstract": true,
+      "properties": [
+        {"$class": "concerto.metamodel@1.0.0.StringProperty", "name": "id", "isArray": false, "isOptional": false}
+      ]
+    }
+  ]
+}

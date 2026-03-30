@@ -1,0 +1,16 @@
+{
+  "name": "unrelated requested type is rejected",
+  "model_files": [
+    "models/employee_model.json",
+    "models/unrelated_model.json"
+  ],
+  "instance_file": "instances/employee_valid.json",
+  "type_name": "org.other@1.0.0.Invoice",
+  "expect": {
+    "valid": false,
+    "error_count": 1,
+    "error_paths": [
+      "$.$class"
+    ]
+  }
+}

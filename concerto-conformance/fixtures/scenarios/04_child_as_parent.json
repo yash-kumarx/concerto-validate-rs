@@ -1,0 +1,13 @@
+{
+  "name": "child instance validates against parent type",
+  "model_files": [
+    "models/employee_model.json"
+  ],
+  "instance_file": "instances/employee_valid.json",
+  "type_name": "org.example@1.0.0.Person",
+  "expect": {
+    "valid": true,
+    "error_count": 0,
+    "error_paths": []
+  }
+}

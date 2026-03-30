@@ -1,0 +1,38 @@
+{
+  "$class": "concerto.metamodel@1.0.0.Model",
+  "namespace": "org.example@1.0.0",
+  "declarations": [
+    {
+      "$class": "concerto.metamodel@1.0.0.EnumDeclaration",
+      "name": "Gender",
+      "properties": [
+        {"$class": "concerto.metamodel@1.0.0.EnumProperty", "name": "MALE"},
+        {"$class": "concerto.metamodel@1.0.0.EnumProperty", "name": "FEMALE"},
+        {"$class": "concerto.metamodel@1.0.0.EnumProperty", "name": "OTHER"}
+      ]
+    },
+    {
+      "$class": "concerto.metamodel@1.0.0.ConceptDeclaration",
+      "name": "PersonWithGender",
+      "isAbstract": false,
+      "properties": [
+        {"$class": "concerto.metamodel@1.0.0.StringProperty", "name": "email", "isArray": false, "isOptional": false},
+        {"$class": "concerto.metamodel@1.0.0.StringProperty", "name": "firstName", "isArray": false, "isOptional": false},
+        {
+          "$class": "concerto.metamodel@1.0.0.IntegerProperty",
+          "name": "age",
+          "isArray": false,
+          "isOptional": false,
+          "validator": {"$class": "concerto.metamodel@1.0.0.IntegerDomainValidator", "lower": 0, "upper": 150}
+        },
+        {
+          "$class": "concerto.metamodel@1.0.0.ObjectProperty",
+          "name": "gender",
+          "isArray": false,
+          "isOptional": false,
+          "type": {"$class": "concerto.metamodel@1.0.0.TypeIdentifier", "name": "Gender"}
+        }
+      ]
+    }
+  ]
+}

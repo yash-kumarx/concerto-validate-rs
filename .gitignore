@@ -1,0 +1,7 @@
+target/
+pkg/
+concerto-wasm/pkg/
+concerto-wasm/demo/pkg/
+concerto-wasm/pkg-node/
+*.wasm
+Cargo.lock

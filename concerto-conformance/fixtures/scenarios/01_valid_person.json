@@ -1,0 +1,13 @@
+{
+  "name": "valid person instance passes",
+  "model_files": [
+    "models/person_model.json"
+  ],
+  "instance_file": "instances/person_valid.json",
+  "type_name": "org.example@1.0.0.Person",
+  "expect": {
+    "valid": true,
+    "error_count": 0,
+    "error_paths": []
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "$class": "concerto.metamodel@1.0.0.Model",
+  "namespace": "org.scalar@1.0.0",
+  "declarations": [
+    {
+      "$class": "concerto.metamodel@1.0.0.StringScalar",
+      "name": "PostalCode",
+      "validator": {
+        "$class": "concerto.metamodel@1.0.0.StringRegexValidator",
+        "pattern": "^[0-9]{5}$",
+        "flags": ""
+      },
+      "lengthValidator": {
+        "$class": "concerto.metamodel@1.0.0.StringLengthValidator",
+        "minLength": 5,
+        "maxLength": 5
+      }
+    },
+    {
+      "$class": "concerto.metamodel@1.0.0.ConceptDeclaration",
+      "name": "Parcel",
+      "isAbstract": false,
+      "properties": [
+        {
+          "$class": "concerto.metamodel@1.0.0.ObjectProperty",
+          "name": "postalCode",
+          "isArray": false,
+          "isOptional": false,
+          "type": {"$class": "concerto.metamodel@1.0.0.TypeIdentifier", "name": "PostalCode"}
+        }
+      ]
+    }
+  ]
+}

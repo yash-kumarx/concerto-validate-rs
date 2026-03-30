@@ -1,0 +1,16 @@
+{
+  "name": "missing required properties are reported at exact paths",
+  "model_files": [
+    "models/person_model.json"
+  ],
+  "instance_file": "instances/person_missing_required.json",
+  "type_name": "org.example@1.0.0.Person",
+  "expect": {
+    "valid": false,
+    "error_count": 2,
+    "error_paths": [
+      "$.firstName",
+      "$.age"
+    ]
+  }
+}

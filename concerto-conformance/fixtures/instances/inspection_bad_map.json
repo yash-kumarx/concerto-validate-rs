@@ -1,0 +1,7 @@
+{
+  "$class": "org.map@1.0.0.Inspection",
+  "checks": {
+    "not-a-datetime": true,
+    "2026-03-30T12:00:00Z": "yes"
+  }
+}

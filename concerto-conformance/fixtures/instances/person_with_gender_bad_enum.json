@@ -1,0 +1,7 @@
+{
+  "$class": "org.example@1.0.0.PersonWithGender",
+  "email": "alice@example.com",
+  "firstName": "Alice",
+  "age": 25,
+  "gender": "UNKNOWN"
+}

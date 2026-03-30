@@ -1,0 +1,15 @@
+{
+  "name": "enum field rejects unknown literal",
+  "model_files": [
+    "models/person_with_gender_model.json"
+  ],
+  "instance_file": "instances/person_with_gender_bad_enum.json",
+  "type_name": "org.example@1.0.0.PersonWithGender",
+  "expect": {
+    "valid": false,
+    "error_count": 1,
+    "error_paths": [
+      "$.gender"
+    ]
+  }
+}

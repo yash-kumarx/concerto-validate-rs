@@ -1,0 +1,19 @@
+{
+  "$class": "concerto.metamodel@1.0.0.Model",
+  "namespace": "org.other@1.0.0",
+  "declarations": [
+    {
+      "$class": "concerto.metamodel@1.0.0.ConceptDeclaration",
+      "name": "Invoice",
+      "isAbstract": false,
+      "properties": [
+        {
+          "$class": "concerto.metamodel@1.0.0.StringProperty",
+          "name": "invoiceNumber",
+          "isArray": false,
+          "isOptional": false
+        }
+      ]
+    }
+  ]
+}

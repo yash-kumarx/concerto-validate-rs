@@ -1,0 +1,15 @@
+{
+  "name": "regex validator rejects invalid email",
+  "model_files": [
+    "models/contact_model.json"
+  ],
+  "instance_file": "instances/contact_bad_email.json",
+  "type_name": "org.example@1.0.0.Contact",
+  "expect": {
+    "valid": false,
+    "error_count": 1,
+    "error_paths": [
+      "$.email"
+    ]
+  }
+}

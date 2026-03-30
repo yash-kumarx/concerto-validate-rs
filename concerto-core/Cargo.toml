@@ -1,0 +1,27 @@
+[package]
+name = "concerto-core"
+version = "0.1.0"
+edition = "2021"
+description = "Concerto entity validator -- GSoC 2026 POC"
+license = "Apache-2.0"
+# using the accord project repo for the POC branch right now
+repository = "https://github.com/accordproject/concerto-validate-rs"
+keywords = ["concerto", "validation", "accord-project", "schema"]
+# tested on 1.75+
+rust-version = "1.75"
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+regex = { workspace = true }
+chrono = { workspace = true }
+once_cell = { workspace = true }
+log = { workspace = true }
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "validation_bench"
+harness = false

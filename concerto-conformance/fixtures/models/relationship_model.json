@@ -1,0 +1,36 @@
+{
+  "$class": "concerto.metamodel@1.0.0.Model",
+  "namespace": "org.fleet@1.0.0",
+  "declarations": [
+    {
+      "$class": "concerto.metamodel@1.0.0.AssetDeclaration",
+      "name": "Vehicle",
+      "isAbstract": false,
+      "properties": [
+        {"$class": "concerto.metamodel@1.0.0.StringProperty", "name": "vin", "isArray": false, "isOptional": false}
+      ]
+    },
+    {
+      "$class": "concerto.metamodel@1.0.0.AssetDeclaration",
+      "name": "Driver",
+      "isAbstract": false,
+      "properties": [
+        {"$class": "concerto.metamodel@1.0.0.StringProperty", "name": "licenseId", "isArray": false, "isOptional": false}
+      ]
+    },
+    {
+      "$class": "concerto.metamodel@1.0.0.ConceptDeclaration",
+      "name": "Assignment",
+      "isAbstract": false,
+      "properties": [
+        {
+          "$class": "concerto.metamodel@1.0.0.RelationshipProperty",
+          "name": "vehicle",
+          "isArray": false,
+          "isOptional": false,
+          "type": {"$class": "concerto.metamodel@1.0.0.TypeIdentifier", "name": "Vehicle"}
+        }
+      ]
+    }
+  ]
+}

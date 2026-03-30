@@ -1,0 +1,19 @@
+[package]
+name = "concerto-cli"
+version = "0.1.0"
+edition = "2021"
+description = "CLI wrapper for the Concerto validator POC"
+license = "Apache-2.0"
+# same repo for now, split crates can come later if needed
+repository = "https://github.com/accordproject/concerto-validate-rs"
+keywords = ["concerto", "validation", "cli", "accord-project"]
+rust-version = "1.75"
+
+[[bin]]
+name = "concerto-rs"
+path = "src/main.rs"
+
+[dependencies]
+concerto-core = { path = "../concerto-core" }
+clap = { version = "4.0", features = ["derive"] }
+serde_json = { workspace = true }

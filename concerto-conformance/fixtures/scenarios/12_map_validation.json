@@ -1,0 +1,16 @@
+{
+  "name": "map validation checks both key and value",
+  "model_files": [
+    "models/map_model.json"
+  ],
+  "instance_file": "instances/inspection_bad_map.json",
+  "type_name": "org.map@1.0.0.Inspection",
+  "expect": {
+    "valid": false,
+    "error_count": 2,
+    "error_paths": [
+      "$.checks[\"not-a-datetime\"]",
+      "$.checks.2026-03-30T12:00:00Z"
+    ]
+  }
+}

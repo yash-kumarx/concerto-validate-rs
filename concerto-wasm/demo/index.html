@@ -1,0 +1,260 @@
+<!--
+  concerto-rs wasm demo
+
+  build: wasm-pack build --target web   (run from concerto-wasm/)
+  serve: python3 -m http.server 8080    (run from this demo/ dir)
+
+  tested in chrome + firefox
+  file:// won't work, needs http
+  this demo reloads the model on every click. not optimal, just simple
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>concerto-rs demo</title>
+  <style>
+    body {
+      max-width: 980px;
+      margin: 32px auto;
+      padding: 0 16px 48px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      line-height: 1.45;
+      color: #111;
+    }
+
+    h1, h2, p {
+      margin: 0 0 12px;
+    }
+
+    .note {
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 6px;
+      font-weight: 700;
+    }
+
+    input,
+    textarea,
+    button {
+      font: inherit;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      min-height: 240px;
+      resize: vertical;
+    }
+
+    .cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    button {
+      margin-top: 16px;
+      padding: 8px 18px;
+      border: 1px solid #444;
+      background: #f2f2f2;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      color: #777;
+    }
+
+    #status {
+      margin-top: 10px;
+      color: #444;
+    }
+
+    #output {
+      margin-top: 16px;
+      padding: 12px;
+      border: 1px solid #bbb;
+      min-height: 80px;
+      white-space: pre-wrap;
+    }
+
+    .valid {
+      color: #0a6b20;
+    }
+
+    .invalid {
+      color: #8b0000;
+    }
+
+    @media (max-width: 820px) {
+      .cols {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>concerto-rs wasm demo</h1>
+  <p class="note">plain demo on purpose. paste model JSON, paste instance JSON, hit validate</p>
+
+  <label for="type-name">type name</label>
+  <input id="type-name" value="org.example@1.0.0.Person">
+
+  <div class="cols">
+    <div>
+      <label for="model-input">model json</label>
+      <textarea id="model-input" spellcheck="false"></textarea>
+    </div>
+    <div>
+      <label for="instance-input">instance json</label>
+      <textarea id="instance-input" spellcheck="false"></textarea>
+    </div>
+  </div>
+
+  <button id="validate-btn" disabled>validate</button>
+  <div id="status">loading wasm...</div>
+  <pre id="output">waiting for wasm init...</pre>
+
+  <script type="module">
+    import init, { WasmModelManager } from "./pkg/concerto_wasm.js";
+
+    const modelInput = document.getElementById("model-input");
+    const instanceInput = document.getElementById("instance-input");
+    const typeInput = document.getElementById("type-name");
+    const validateBtn = document.getElementById("validate-btn");
+    const status = document.getElementById("status");
+    const output = document.getElementById("output");
+
+    modelInput.value = JSON.stringify({
+      "$class": "concerto.metamodel@1.0.0.Model",
+      "namespace": "org.example@1.0.0",
+      "declarations": [
+        {
+          "$class": "concerto.metamodel@1.0.0.ConceptDeclaration",
+          "name": "Person",
+          "isAbstract": false,
+          "properties": [
+            { "$class": "concerto.metamodel@1.0.0.StringProperty", "name": "email", "isArray": false, "isOptional": false },
+            { "$class": "concerto.metamodel@1.0.0.StringProperty", "name": "firstName", "isArray": false, "isOptional": false },
+            {
+              "$class": "concerto.metamodel@1.0.0.IntegerProperty",
+              "name": "age",
+              "isArray": false,
+              "isOptional": false,
+              "validator": {
+                "$class": "concerto.metamodel@1.0.0.IntegerDomainValidator",
+                "lower": 0,
+                "upper": 150
+              }
+            }
+          ]
+        }
+      ]
+    }, null, 2);
+
+    instanceInput.value = JSON.stringify({
+      "$class": "org.example@1.0.0.Person",
+      "email": "alice@example.com",
+      "firstName": "Alice",
+      "age": 30
+    }, null, 2);
+
+    function showText(text, className = "") {
+      output.className = className;
+      output.textContent = text;
+    }
+
+    function parseJsonOrThrow(text, label) {
+      try {
+        return JSON.parse(text);
+      } catch (error) {
+        throw new Error(`${label} json parse failed\n${String(error)}`);
+      }
+    }
+
+    function formatErrors(errors) {
+      const lines = [`INVALID (${errors.length} errors)`, ""];
+      for (const error of errors) {
+        lines.push(`${error.path}: ${error.message}`);
+      }
+      return lines.join("\n");
+    }
+
+    try {
+      await init();
+      status.textContent = "wasm loaded";
+      validateBtn.disabled = false;
+      showText("wasm ready\nclick validate");
+    } catch (error) {
+      status.textContent = "wasm init failed";
+      showText(
+        "couldn't load ./pkg/concerto_wasm.js\n\n" +
+        "run:\n" +
+        "  wasm-pack build --target web\n\n" +
+        String(error),
+        "invalid",
+      );
+    }
+
+    validateBtn.addEventListener("click", () => {
+      let model;
+      let instance;
+
+      try {
+        model = parseJsonOrThrow(modelInput.value, "model");
+        instance = parseJsonOrThrow(instanceInput.value, "instance");
+      } catch (error) {
+        showText(String(error), "invalid");
+        return;
+      }
+
+      const typeName = typeInput.value.trim();
+      if (!typeName) {
+        showText("type name is empty", "invalid");
+        return;
+      }
+
+      const mm = new WasmModelManager();
+
+      try {
+        mm.addModelValue(model);
+      } catch (error) {
+        showText(`model load failed\n${String(error)}`, "invalid");
+        return;
+      }
+
+      try {
+        const result = mm.validateInstanceValue(instance, typeName);
+        if (result.valid) {
+          showText(`VALID\n\nchecked as ${typeName}\n0 errors`, "valid");
+        } else {
+          showText(formatErrors(result.errors), "invalid");
+        }
+      } catch (error) {
+        showText(`runtime error\n${String(error)}`, "invalid");
+      }
+    });
+
+    for (const el of [modelInput, instanceInput, typeInput]) {
+      el.addEventListener("input", () => {
+        if (!validateBtn.disabled) {
+          showText("edited...\nclick validate again");
+        }
+      });
+    }
+  </script>
+</body>
+</html>

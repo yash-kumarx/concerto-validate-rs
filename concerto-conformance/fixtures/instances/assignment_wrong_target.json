@@ -1,0 +1,4 @@
+{
+  "$class": "org.fleet@1.0.0.Assignment",
+  "vehicle": "resource:org.fleet@1.0.0.Driver#D-1"
+}

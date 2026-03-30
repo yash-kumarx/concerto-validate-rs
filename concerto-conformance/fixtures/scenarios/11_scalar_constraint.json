@@ -1,0 +1,15 @@
+{
+  "name": "scalar declaration constraints are enforced",
+  "model_files": [
+    "models/scalar_model.json"
+  ],
+  "instance_file": "instances/parcel_bad_postal_code.json",
+  "type_name": "org.scalar@1.0.0.Parcel",
+  "expect": {
+    "valid": false,
+    "error_count": 1,
+    "error_paths": [
+      "$.postalCode"
+    ]
+  }
+}

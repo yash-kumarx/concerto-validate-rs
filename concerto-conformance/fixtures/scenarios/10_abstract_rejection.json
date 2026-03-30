@@ -1,0 +1,15 @@
+{
+  "name": "abstract type cannot be instantiated",
+  "model_files": [
+    "models/abstract_model.json"
+  ],
+  "instance_file": "instances/abstract_base_record.json",
+  "type_name": "org.abstracts@1.0.0.BaseRecord",
+  "expect": {
+    "valid": false,
+    "error_count": 1,
+    "error_paths": [
+      "$.$class"
+    ]
+  }
+}

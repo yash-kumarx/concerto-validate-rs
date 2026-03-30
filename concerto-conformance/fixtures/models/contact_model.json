@@ -1,0 +1,24 @@
+{
+  "$class": "concerto.metamodel@1.0.0.Model",
+  "namespace": "org.example@1.0.0",
+  "declarations": [
+    {
+      "$class": "concerto.metamodel@1.0.0.ConceptDeclaration",
+      "name": "Contact",
+      "isAbstract": false,
+      "properties": [
+        {
+          "$class": "concerto.metamodel@1.0.0.StringProperty",
+          "name": "email",
+          "isArray": false,
+          "isOptional": false,
+          "validator": {
+            "$class": "concerto.metamodel@1.0.0.StringRegexValidator",
+            "pattern": "^[^@]+@[^@]+\\.[^@]+$",
+            "flags": ""
+          }
+        }
+      ]
+    }
+  ]
+}

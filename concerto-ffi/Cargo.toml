@@ -1,0 +1,16 @@
+[package]
+name = "concerto-ffi"
+version = "0.1.0"
+edition = "2021"
+description = "C ABI wrapper for the Concerto validator POC"
+license = "Apache-2.0"
+repository = "https://github.com/accordproject/concerto-validate-rs"
+keywords = ["concerto", "ffi", "validation", "accord-project"]
+rust-version = "1.75"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+concerto-core = { path = "../concerto-core" }
+serde_json = { workspace = true }

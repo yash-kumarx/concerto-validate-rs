@@ -1,0 +1,4 @@
+{
+  "$class": "org.example@1.0.0.Contact",
+  "email": "not-an-email"
+}
