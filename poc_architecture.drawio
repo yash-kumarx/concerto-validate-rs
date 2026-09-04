@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1600" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- TITLE -->
+    <mxCell id="2" value="concerto-validate-rs — Cargo Workspace Architecture" style="text;html=1;align=center;fontSize=22;fontStyle=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="400" y="20" width="1400" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- ===== EXTERNAL CALLERS ===== -->
+
+    <mxCell id="3" value="terminal / local dev" style="rounded=1;html=1;fillColor=#f5f5f5;strokeColor=#888888;dashed=1;fontSize=13;fontStyle=2;fontColor=#333333;" vertex="1" parent="1">
+      <mxGeometry x="80" y="80" width="220" height="55" as="geometry" />
+    </mxCell>
+
+    <mxCell id="4" value="Browser" style="rounded=1;html=1;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;fontSize=13;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="1760" y="80" width="160" height="55" as="geometry" />
+    </mxCell>
+
+    <mxCell id="5" value="Node.js" style="rounded=1;html=1;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;fontSize=13;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="1960" y="80" width="160" height="55" as="geometry" />
+    </mxCell>
+
+    <mxCell id="6" value="Python (ctypes)" style="rounded=1;html=1;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;fontSize=13;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="1760" y="1460" width="160" height="55" as="geometry" />
+    </mxCell>
+
+    <mxCell id="7" value="C# · Go · native" style="rounded=1;html=1;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;fontSize=13;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="1960" y="1460" width="160" height="55" as="geometry" />
+    </mxCell>
+
+    <mxCell id="8" value="Gherkin runner (any language)" style="rounded=1;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;dashed=1;fontSize=13;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="60" y="1460" width="280" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- ===== WORKSPACE BORDER ===== -->
+    <mxCell id="9" value="Cargo Workspace" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#aaaaaa;verticalAlign=top;fontSize=15;fontStyle=2;fontColor=#aaaaaa;" vertex="1" parent="1">
+      <mxGeometry x="30" y="155" width="2140" height="1285" as="geometry" />
+    </mxCell>
+
+    <!-- ===== concerto-core (CENTER) ===== -->
+    <mxCell id="10" value="&lt;b&gt;&lt;font size=&quot;15&quot;&gt;concerto-core&lt;/font&gt;&lt;/b&gt;&lt;hr/&gt;ModelManager { models: HashMap&lt;String, ModelFile&gt; }&lt;br/&gt;&lt;br/&gt;pub fn add_model_from_json(&amp;mut self, json: &amp;str)&lt;br/&gt;pub fn validate_instance(&amp;self, inst: &amp;Value, type_name: &amp;str)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;→ Result&lt;ValidationResult, ConcertoError&gt;&lt;br/&gt;pub fn resolve_type(&amp;self, fqn: &amp;str) → ...&lt;br/&gt;&lt;br/&gt;declaration.rs · model_manager.rs&lt;br/&gt;instance_validator.rs · parser/ · error.rs&lt;br/&gt;&lt;br/&gt;&lt;i&gt;zero workspace dependencies&lt;/i&gt;" style="rounded=1;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="800" y="560" width="600" height="320" as="geometry" />
+    </mxCell>
+
+    <!-- ===== concerto-cli (TOP-LEFT) ===== -->
+    <mxCell id="14" value="&lt;b&gt;&lt;font size=&quot;15&quot;&gt;concerto-cli&lt;/font&gt;&lt;/b&gt;&lt;hr/&gt;clap argument parsing&lt;br/&gt;&lt;br/&gt;--model &amp;nbsp;&amp;nbsp; model.json&lt;br/&gt;--instance &amp;nbsp;instance.json&lt;br/&gt;--type &amp;nbsp;&amp;nbsp;&amp;nbsp; org.hr@1.0.0.Employee&lt;br/&gt;&lt;br/&gt;prints ValidationResult as JSON to stdout&lt;br/&gt;&lt;br/&gt;exit code 0 = valid&lt;br/&gt;exit code 1 = invalid" style="rounded=1;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="80" y="200" width="430" height="310" as="geometry" />
+    </mxCell>
+
+    <!-- ===== concerto-wasm (TOP-RIGHT) ===== -->
+    <mxCell id="12" value="&lt;b&gt;&lt;font size=&quot;15&quot;&gt;concerto-wasm&lt;/font&gt;&lt;/b&gt;&lt;hr/&gt;wasm-bindgen · wasm-pack&lt;br/&gt;&lt;br/&gt;WasmModelManager { inner: ModelManager }&lt;br/&gt;&lt;br/&gt;addModelValue(value: JsValue)&lt;br/&gt;validateInstanceValue(value: JsValue, type_name: &amp;str)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;→ Result&lt;JsValue, JsValue&gt;&lt;br/&gt;&lt;br/&gt;JsValue ↔ serde_json::Value&lt;br/&gt;(via serde_wasm_bindgen)" style="rounded=1;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="1680" y="200" width="450" height="310" as="geometry" />
+    </mxCell>
+
+    <!-- ===== concerto-ffi (BOTTOM-RIGHT) ===== -->
+    <mxCell id="13" value="&lt;b&gt;&lt;font size=&quot;15&quot;&gt;concerto-ffi&lt;/font&gt;&lt;/b&gt;&lt;hr/&gt;extern &quot;C&quot; · #[no_mangle]&lt;br/&gt;&lt;br/&gt;concerto_model_manager_new() → *mut ...&lt;br/&gt;concerto_model_manager_free(*mut ...)&lt;br/&gt;concerto_add_model(mm, json) → *mut c_char&lt;br/&gt;concerto_validate_instance(...) → *mut c_char&lt;br/&gt;concerto_free_string(*mut c_char)&lt;br/&gt;&lt;br/&gt;Box::into_raw · Box::from_raw · CString&lt;br/&gt;no panics across FFI boundary" style="rounded=1;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="1680" y="1050" width="450" height="310" as="geometry" />
+    </mxCell>
+
+    <!-- ===== concerto-conformance (BOTTOM-LEFT) ===== -->
+    <mxCell id="15" value="&lt;b&gt;&lt;font size=&quot;15&quot;&gt;concerto-conformance&lt;/font&gt;&lt;/b&gt;&lt;hr/&gt;12 fixture-backed integration scenarios&lt;br/&gt;&lt;br/&gt;fixtures/{name}/model.json&lt;br/&gt;fixtures/{name}/instance.json&lt;br/&gt;fixtures/{name}/expected.json&lt;br/&gt;&lt;br/&gt;asserts: result.valid, error paths, error types&lt;br/&gt;&lt;br/&gt;→ GSoC Phase 1: convert to Gherkin .feature files" style="rounded=1;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="80" y="1050" width="430" height="310" as="geometry" />
+    </mxCell>
+
+    <!-- ===== ARROWS — wrappers → core ===== -->
+
+    <mxCell id="20" value="depends on" style="edgeStyle=orthogonalEdgeStyle;fontSize=11;fontColor=#555555;strokeColor=#555555;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" edge="1" source="12" target="10" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="21" value="depends on" style="edgeStyle=orthogonalEdgeStyle;fontSize=11;fontColor=#555555;strokeColor=#555555;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" source="13" target="10" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="22" value="depends on" style="edgeStyle=orthogonalEdgeStyle;fontSize=11;fontColor=#555555;strokeColor=#555555;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" source="14" target="10" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="23" value="depends on" style="edgeStyle=orthogonalEdgeStyle;fontSize=11;fontColor=#555555;strokeColor=#555555;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" source="15" target="10" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- ===== ARROWS — external callers → wrappers ===== -->
+
+    <mxCell id="30" value="" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#888888;" edge="1" source="3" target="14" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="31" value="" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#82b366;" edge="1" source="4" target="12" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="32" value="" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#82b366;" edge="1" source="5" target="12" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="33" value="" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#d6b656;" edge="1" source="6" target="13" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="34" value="" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#d6b656;" edge="1" source="7" target="13" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="35" value="" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#9673a6;" edge="1" source="8" target="15" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- ===== BOTTOM NOTE ===== -->
+    <mxCell id="40" value="validation logic lives in exactly one place — concerto-core.  wrappers convert input → call core → convert output.  nothing more." style="text;html=1;align=center;fontSize=12;fontStyle=2;strokeColor=none;fillColor=none;fontColor=#888888;" vertex="1" parent="1">
+      <mxGeometry x="500" y="1530" width="1200" height="24" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

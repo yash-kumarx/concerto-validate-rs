@@ -1,0 +1,6 @@
+{
+  "$class": "org.hr@1.0.0.Employee",
+  "name": "Priya",
+  "age": 30,
+  "role": "ADMIN"
+}
